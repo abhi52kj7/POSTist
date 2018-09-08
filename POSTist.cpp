@@ -1,37 +1,6 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-/*
-string hashing(string ownerId, float value, string ownerName)
-{
-
-	return hash;
-}
-
-
-class block
-{
-	time_t timeStamp;
-	struct data = new data;
-	int nodeNumber;
-	string nodeID;
-	string referenceNodeId;
-	string childReferenceNodeID[];
-	string genesisReferenceNodeID;
-	string hashValue;
-	
-	block(struct data)
-	{
-
-	}
-
-public:
-	void getData()
-	{
-
-	}
-};
-*/
 
 struct data
 {
@@ -47,12 +16,30 @@ struct node{
 	int nodeNumber;
 	string nodeID;
 	string referenceNodeId;
-	string childReferenceNodeID;
+	vector<string> childReferenceNodeID;
 	string genesisReferenceNodeID;
 	string hashValue;
 	int childNO;
-	//string childNode[];
-}*genesis;
+}*genesis = NULL;
+
+template <typename T>
+std::string convertPointerToStringAddress(const T* obj)
+{
+  int address(reinterpret_cast<int>(obj));
+  std::stringstream ss;
+  ss << address;
+  return ss.str();
+}
+
+template <typename T>
+T* convertAddressStringToPointer(const std::string& address)
+{
+  std::stringstream ss;
+  ss << address;
+  int tmp(0);
+  if(!(ss >> tmp)) throw std::runtime_error("Failed - invalid address!");
+  return reinterpret_cast<T*>(tmp);
+}
 
 void getData(string ownerId, float value, string ownerName,struct node* parent = NULL)
 {
@@ -60,14 +47,16 @@ void getData(string ownerId, float value, string ownerName,struct node* parent =
 	{
 		struct node* ptr = new node;
 		genesis = ptr;
+		struct node* null = new node;
+		null = NULL;
 		ptr->timeStamp = time(0);
 		ptr->set->ownerId = ownerId;
 		ptr->set->value = value;
 		ptr->set->ownerName = ownerName;
 		ptr->nodeNumber = 1;
 		//ptr.nodeID = 
-		//ptr->referenceNodeId;
-		//ptr->genesisReferenceNodeID;
+		ptr->referenceNodeId = convertPointerToStringAddress(null);
+		ptr->genesisReferenceNodeID = convertPointerToStringAddress(genesis);
 	}
 	else
 	{
@@ -77,14 +66,21 @@ void getData(string ownerId, float value, string ownerName,struct node* parent =
 
 void print(struct node* ptr)
 {
-	cout<<ptr->set->ownerId;
+	cout<<"OwnerId"<<ptr->set->ownerId<<endl;
+	cout<<"Value"<<ptr->set->value<<endl;
+	cout<<"ownerName"<<ptr->set->ownerName<<endl;
 }
 
 int main()
 {
-	genesis = NULL;
-	getData("Abhi", 3.0, "Abhi");
-	print(genesis);
-	//getData(string OwnerId, float value, string ownerName); 
+	string OwnerId = "QKOO276TKX0X";
+	float value = 10;
+	string ownerName = "Abhishek";
+
+	/////////////////  Add Genesis Block /////////////////
+	getData(string OwnerId, float value, string ownerName);
+	///////////////////////////////////////////////////////
+
+	print(genesis); 
 
 }
