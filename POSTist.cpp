@@ -41,6 +41,25 @@ T* convertAddressStringToPointer(const std::string& address)
   return reinterpret_cast<T*>(tmp);
 }
 
+string Convert (float number)
+{
+    std::ostringstream buff;
+    buff<<number;
+    return buff.str();   
+}
+
+string hashing(vector<string> value)
+{
+	auto it = value.begin();
+	string hash = *it;
+	it++;
+	for( ; it != value.end(); it++)
+	{
+		//hash = hash&(*it); ///////////  Hashing Operation
+	}
+	return hash;
+}
+
 void getData(string ownerId, float value, string ownerName,struct node* parent = NULL)
 {
 	if(genesis == NULL)
@@ -53,6 +72,11 @@ void getData(string ownerId, float value, string ownerName,struct node* parent =
 		ptr->set->ownerId = ownerId;
 		ptr->set->value = value;
 		ptr->set->ownerName = ownerName;
+		vector<string> v;
+		v.push_back(ownerId);
+		v.push_back(Convert(value));
+		v.push_back(ownerName);
+		ptr->set->hash = hashing(v);
 		ptr->nodeNumber = 1;
 		//ptr.nodeID = 
 		ptr->referenceNodeId = convertPointerToStringAddress(null);
